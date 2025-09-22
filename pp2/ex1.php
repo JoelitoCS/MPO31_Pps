@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejercicio 1: NUmeros parejos</title>
+    <title>Exercici 1: Nombres parells entre 50 i 500</title>
     <style>
 
         body {
@@ -12,6 +12,12 @@
             margin: 0;
         }
 
+        h1{
+            text-align: center;
+            margin-top: 20px;
+            color: #333;
+        }
+        
         .contenedorBucle {
             display: flex;
             flex-wrap: wrap;

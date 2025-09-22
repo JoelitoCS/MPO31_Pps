@@ -49,7 +49,7 @@
         <nav>
             <ul>
                 <li><a href="ex1.php">Exercici 1 -  Nombres parells entre 50 i 500</a></li>
-                <li><a href="ex2.php">Exercici 2: Taules de multiplica</a></li>
+                <li><a href="ex2.php">Exercici 2: Taules de multiplicar</a></li>
                 <li><a href="ex3.php">Exercici 3: Nombre aleatori parell o senar</a></li>
             </ul>
         </nav>

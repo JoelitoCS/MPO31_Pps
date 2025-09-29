@@ -1,13 +1,9 @@
 
-
-
-
 <?php
-
-include("index.php");
 
 $cartelera = [
     [
+        "id" => 0,
         "nom" => "Una batalla tras otra",
         "imatge" => "https://www.ocinemagic.es/images/pelicules/8801.jpg", 
         "horaris" => ["16:00", "17:50", "19:00", "20:45", "22:00"],
@@ -20,6 +16,7 @@ $cartelera = [
         "trailer" => "https://www.youtube.com/watch?v=U_wQ_20g8Jw"
     ],
     [
+        "id" => 1,
         "nom" => "Afterburn (Zona Cero)",
         "imatge" => "https://www.ocinemagic.es/images/pelicules/8908.jpg",  
         "horaris" => ["22:40"],
@@ -32,6 +29,7 @@ $cartelera = [
         "trailer" => "https://www.youtube.com/watch?v=yhCPdFOrFvI"
     ],
     [
+        "id" => 2,
         "nom" => "El cautivo",
         "imatge" => "https://www.ocinemagic.es/images/pelicules/8853.jpg",
         "horaris" => ["18:10", "22:15"],
@@ -44,6 +42,7 @@ $cartelera = [
         "trailer" => "https://www.youtube.com/watch?v=Zy4GBAoS7l4"
     ],
     [
+        "id" => 3,
         "nom" => "Maspalomas",
         "imatge" => "https://www.ocinemagic.es/images/pelicules/8925.jpg",
         "horaris" => ["22:40", "16:15", "20:30"],  // múltiple horarios
@@ -53,10 +52,11 @@ $cartelera = [
         "repartiment" => ["José Ramón Soroiz", "Nagore Aranburu", "Kandido Uranga"],
         "qualificacio" => "+16",
         "genere" => "Drama",
-        "trailer" => "https://www.youtube.com/watch?v=BBBBB"
+        "trailer" => "https://www.youtube.com/watch?v=XZIkmRhRDEc"
     ],
 
     [
+        "id" => 4,
         "nom" => "Strangers: Capítulo 2",
         "imatge" => "https://image.tmdb.org/t/p/w500/…",
         "horaris" => ["15:50", "18:15", "20:15", "22:15"],
@@ -66,21 +66,28 @@ $cartelera = [
         "repartiment" => ["Madelaine Petsch", "Gabriel Basso", "Richard Brake"],
         "qualificacio" => "+16",
         "genere" => "Terror",
-        "trailer" => "https://www.youtube.com/watch?v=CCCCC"
+        "trailer" => "https://www.youtube.com/watch?v=Gb6QWwyw4dA"
     ],
 ];
 
 foreach($cartelera as $pelicula){
         echo "<h1>{$pelicula['nom']}</h1>";
-        echo "<p>{$pelicula['imatge']}</p>";
-        echo "<p>{$pelicula['horaris']}</p>";
-        echo "<p>{$pelicula['sinopsi']}</p>";
-        echo "<p>{$pelicula['durada']}</p>";
-        echo "<p>{$pelicula['director']}</p>";
-        echo "<p>{$pelicula['repartiment']}</p>";
-        echo "<p>{$pelicula['qualificacio']}</p>";
-        echo "<p>{$pelicula['genere']}</p>";
-        echo "<a href='{$pelicula['trailer']}'></a>";
+        echo "<img src='{$pelicula['imatge']}' alt='{$pelicula['nom']}' width = '220px'></img>";
+
+        echo "<div class='divBotones'>";
+
+        foreach($pelicula['horaris'] as $hora){
+
+        echo "<button class='botonesHorario'>$hora</button>";
+
+        }
+        echo "</div>";
+
+        echo "<button><a href='{$pelicula['trailer']}'>Ver tráiler</a></button>";
+
+        echo "<button><a href='detall.php?id={$pelicula['id']}'>Ver info</a></button>";
+
+        
     }
 
 ?>

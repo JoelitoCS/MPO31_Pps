@@ -58,7 +58,7 @@ $cartelera = [
     [
         "id" => 4,
         "nom" => "Nombre: Strangers: Capítulo 2",
-        "imatge" => "https://image.tmdb.org/t/p/w500/…",
+        "imatge" => "https://www.ocinemagic.es/images/pelicules/8929.jpg",
         "horaris" => ["15:50", "18:15", "20:15", "22:15"],
         "sinopsi" => "Una nueva entrega de la saga Strangers, donde los protagonistas enfrentan terrores desconocidos y revelaciones aterradoras.",  
         "durada" => "96 min",
@@ -69,9 +69,5 @@ $cartelera = [
         "trailer" => "https://www.youtube.com/watch?v=Gb6QWwyw4dA"
     ],
 ];
-
-
-
-
 
 ?>

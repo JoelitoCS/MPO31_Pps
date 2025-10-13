@@ -13,6 +13,8 @@
         </tr>";
 
         foreach($productos as $producto){
+        
+        //cogemos la  disponibiliidad de nuestro array productos, y solo habran trues o falses, segúnn si es true o no le diremos que esta dispoible oo no y ya luego recorremos la tabla y ya fuera del bucle la cerramos
 
         $disponibilidad = $producto['disponibilidad'];
 
@@ -43,11 +45,11 @@
 
     function muestraInfoContacto($nombre, $telefono, $foto){
         //compprobamos que tengamos un parametro nom, footo y telefon que este pasado mediante GET y entonces les definimos unas variables
-        if (isset($_GET['nom']) && isset($_GET['foto']) && isset($_GET['telefon'])){
+        if (isset($_POST['nom']) && isset($_POST['foto']) && isset($_POST['telefon'])){
 
-        $nombre = $_GET['nom'];
-        $foto =  $_GET['foto'];
-        $telefono = $_GET['telefon'];
+        $nombre = $_POST['nom'];
+        $foto =  $_POST['foto'];
+        $telefono = $_POST['telefon'];
 
         }
 

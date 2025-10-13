@@ -16,7 +16,7 @@
         
         //cogemos la  disponibiliidad de nuestro array productos, y solo habran trues o falses, segúnn si es true o no le diremos que esta dispoible oo no y ya luego recorremos la tabla y ya fuera del bucle la cerramos
 
-        if ($producto['disponibilidad']) {
+        if ($producto['disponibiidad']) {
 
             $colorRojo = "white";
 

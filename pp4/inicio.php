@@ -15,7 +15,7 @@
 </head>
 <body>
     <h1>Formulario Pasa-Datos</h1>
-    <form action="header.php" method="get">
+    <form action="index.php" method="get">
         <input type="text" name="nom" placeholder="Nombre">
         <input type="text" name="telefon" placeholder="Teléfono">
         <input type="url" name="foto" placeholder="URL de la imagen">

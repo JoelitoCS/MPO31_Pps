@@ -1,0 +1,91 @@
+/* Body */
+body {
+    
+    background-color: #d0e7f9; /* azul suave */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+    
+}
+
+/* Header */
+header {
+    background-color: #7ed6df; /* verde-agua */
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    max-width: 900px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+header h3 {
+    font-size: 22px;
+    margin: 0;
+}
+
+header img {
+    width: 120px;
+    height: 150px
+}
+
+/* Tabla de productos */
+.tabla-productos {
+    margin: 20px auto;
+    width: 80%;
+    max-width: 900px;
+    border-collapse: collapse;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.tabla-productos th, .tabla-productos td {
+    border: 1px solid #ccc;
+    padding: 12px 15px;
+}
+
+.tabla-productos th {
+    background-color: #74b9ff;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.tabla-productos tr {
+    background-color: #f2f2f2;
+}
+
+/* Info de contacto */
+.contacto {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.contacto img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #74b9ff;
+}
+
+/* Footer */
+footer {
+    padding: 20px;
+    background-color: #0984e3;
+    color: #fff;
+    font-size: 12px;
+    width: 90%;
+    max-width: 900px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}

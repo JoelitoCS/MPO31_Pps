@@ -36,6 +36,13 @@ header img {
     height: 150px
 }
 
+.noDispoRed{
+
+    background-color: red;
+
+}
+
+
 /* Tabla de productos */
 .tabla-productos {
     margin: 20px auto;

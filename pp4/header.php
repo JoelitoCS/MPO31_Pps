@@ -1,10 +1,10 @@
 <header> 
 <?php
 
-    if (isset($_GET['nom']) && isset($_GET['foto'])){
+    if (isset($_POST['nom']) && isset($_POST['foto'])){
 
-        $nombre = $_GET['nom'];
-        $foto =  $_GET['foto'];
+        $nombre = $_POST['nom'];
+        $foto =  $_POST['foto'];
 
     }
 

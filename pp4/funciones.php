@@ -21,7 +21,7 @@
             $disponibilidad = "Disponible";
 
         }else{
-
+            
             $disponibilidad = "No disponible";
 
         };

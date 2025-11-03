@@ -6,37 +6,37 @@ include_once "functions.php";
 //primer paso: comprobar si venimos para editar o para añadir
 $editMode = false; //nos dice si estamos editando o añadiendo
 $id = null;
-$nombre = $img = $poder = $desc = "";
+$titulo = $autor = $img = $desc = "";
 
 //SI HAY UN ID EN LA URL, ESTAMOS EDITANDO
 if (isset($_GET['id'])){
     $id = $_GET['id'];
 
-    if (isset($_SESSION['personajes'][$id])){
+    if (isset($_SESSION['libros'][$id])){
         $editMode = true;
-        $personaje = $_SESSION['personajes'][$id];
-        $nombre = $personaje['nombre'];
-        $img = $personaje['imagen'];
-        $poder = $personaje['poder'];
-        $desc = $personaje['descripcion'];
+        $libro = $_SESSION['libros'][$id];
+        $titulo = $libro['titulo'];
+        $autor = $libro['autor'];
+        $img = $libro['imagen'];
+        $desc = $libro['descripcion'];
     }
 }
 
 //segundo paso: PROCESAR EL FORM(POST)
 if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     //recogemos los datos del formulario
-    $nombre = $_POST['nombre'];
+    $titulo = $_POST['titulo'];
+    $autor = $_POST['autor'];
     $img = $_POST['imagen'];
-    $poder = $_POST['poder'];
     $desc = $_POST['descripcion'];
 
     if ($editMode) {
         //EDITANDO
-        editarPersonaje($nombre, $img, $poder, $desc, $id);
+        editarLibro($titulo, $autor, $img, $desc, $id);
         
     } else {
         //AÑADIENDO
-        agregarPersonaje($nombre, $img, $poder, $desc);
+        agregarLibro($titulo, $autor, $img, $desc, $id);
     }
 
     //redireccionamos al index.php
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     <header class="bg-light py-3 mb-4 shadow-sm">
         <div class="container d-flex align-items-center justify-content-between">
             <div>
-                <h4 class="m-0">👋 Bienvenido, NOMBRE DE USUARIO</h4>
+                <h4 class="m-0">👋 Bienvenido, <?= $_SESSION['username'] ?></h4>
                 <p class="text-muted m-0"><i class="fas fa-user-shield text-success"></i> ROL ADMIN O ROL LECTOR???</p>
             </div>
             <a href="home.php" class="btn btn-secondary btn-sm">
@@ -73,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
         </div>
 
         <!-- Formulario para agregar o editar libro. DEPENDIENDO DE SI SE AÑADE O SE EDITA CAMBIARÁN COSA DEL FORMULARIO, USA TERNARIOS SON MUY ÚTILES-->
-        <form method="POST" class="mx-auto" style="max-width: 600px;">
+        <form action="home.php" method="POST" class="mx-auto" style="max-width: 600px;">
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="titulo" name="titulo" value="" placeholder="Título" required>
                 <label for="titulo">Título</label>
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
                 <label for="descripcion">Descripción</label>
             </div>
             <div class="d-grid">
-                <button type="submit" class="btn btn-primary btn-lg"></button>
+                <button type="submit" class="btn btn-primary btn-lg">Añadir</button>
             </div>
         </form>
     </div>

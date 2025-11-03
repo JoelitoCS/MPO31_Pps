@@ -1,45 +1,48 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['personajes'])) {
-    $_SESSION['personajes'] = 
+
+if (!isset($_SESSION['libros'])) {
+    $_SESSION['libros'] = 
     
     [
         "id" => 0,
-        "nombre" => "Iron Man",
-        "imagen" => "https://static.wikia.nocookie.net/mua/images/7/75/Img_0001_iron_man_mout.obj.png/revision/latest/thumbnail/width/360/height/360?cb=20200207025405",
-        "poder" => "volar",
-        "descripcion" => "Tony Stark en modo robot"
+        "titulo" => "Don Quijote de la Mancha",
+        "autor" => "Miguel de Cervantes",
+        "imagen" => "https://m.media-amazon.com/images/I/91CIwR3QU1L._UF1000,1000_QL80_.jpg",
+        "descripcion" => "Don Quijote de la Mancha en busca de aventuras con su fiel acompañante Sancho Panza."
     ];
 }
 
-//FUNCION PARA AÑADIR PERSONAJE (CREATE EN BDO)
-function agregarPersonaje($nombre, $img, $poder, $desc) {
-    array_push($_SESSION['personajes'], 
+//FUNCION PARA AÑADIR libro (CREATE EN BDO)
+function agregarLibro($titulo, $autor, $img, $desc, $id) {
+    array_push($_SESSION['libros'], 
     [
         "id" => $id,
-        "nombre" => $nombre,
+        "titulo" => $titulo,
+        "autor" => $autor,
         "imagen" => $img,
-        "poder" => $poder,
         "descripcion" => $desc
     ]
     );
 
 }
 
-//EDITAR PERSONAJE
+//EDITAR libro (UPDATE EN BDO)
 
-function editarPersonaje($nombre, $imagen, $poder, $desc, $index) {
+function editarLibro($titulo, $autor, $img, $desc, $id) {
     //Comprobamos id
-    if(isset($_SESSION['personajes'][id])){
-        $_SESSION['personajes'][$id] = [
-            "nombre" => $nombre,
-            "imagen" => $imagen,
-            "poder" => $poder,
+    if(isset($_SESSION['libros'][id])){
+        $_SESSION['libros'][$id] = [
+            "titulo" => $titulo,
+            "autor" => $autor,
+            "imagen" => $img,
             "descripcion" => $desc
         ];
     }
 
 }
+
+
 
 ?>

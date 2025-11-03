@@ -1,5 +1,7 @@
 <?php
 session_start();
+include_once "functions.php";
+
 
 // Verifica si el usuario ha iniciado sesión; si no, redirige a login.php.
 if ($_SESSION['role'] !== "admin" && $_SESSION['role'] !== "lector") {
@@ -70,31 +72,34 @@ if ($_SESSION['role'] !== "admin" && $_SESSION['role'] !== "lector") {
         
 
         <!-- Mostrar lista de libros en un grid de tarjetas con tamaño uniforme -->
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            
-                <div class="col">
-                    <div class="card h-100 shadow-sm">
-                        <img src="" class="card-img-top" alt="" style="height: 400px; object-fit: cover;">
-                        <div class="card-body">
-                            <h5 class="card-title">TITULO</h5>
-                            <p class="card-text"><strong>Autor:</strong> AUTOR</p>
-                            <p class="card-text">DESCRIPCIÓN</p>
-                        </div>
-                      
-                        <!-- Botones de editar y eliminar (solo visible para el admin) -->
-                            <div class="card-footer d-flex justify-content-between">
-                                <a href="" class="btn btn-outline-primary btn-sm">
-                                    <i class="fas fa-edit"></i> Editar
-                                </a>
-                                <a href="" class="btn btn-outline-danger btn-sm">
-                                    <i class="fas fa-trash-alt"></i> Eliminar
-                                </a>
-                            </div>
-                      
-                    </div>
-                </div>
-           
-        </div>
+
+        <?php
+        foreach ($_SESSION['libros'] as $libro){
+            echo '<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">';
+            echo '<div class="col">';
+            echo '<div class="card h-100 shadow-sm">';
+            echo '<img src="' . $libro['imagen'] . '" class="card-img-top" alt="' . $libro['titulo'] . '" style="height: 400px; object-fit: cover;">';
+            echo '<div class="card-body">';
+            echo '<h5 class="card-title">' . $libro['titulo'] . '</h5>';
+            echo '<p class="card-text"><strong>Autor:</strong> ' . $libro['autor'] . '</p>';
+            echo '<p class="card-text">' . $libro['descripcion'] . '</p>';
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+            echo '</div>';
+            echo '<div class="card-footer d-flex justify-content-between">';
+            echo '<a href="add_edit_book.php" class="btn btn-outline-primary btn-sm">
+            <i class="fas fa-edit"></i> Editar
+            </a>';
+            echo '<a href="delete_book.php" class="btn btn-outline-danger btn-sm">
+            <i class="fas fa-trash-alt"></i> Eliminar
+            </a>';
+            echo '</div>';
+        }
+         ?>
+        <!-- Botones de editar y eliminar (solo visible para el admin) -->
+    
+       
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

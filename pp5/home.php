@@ -2,7 +2,6 @@
 session_start();
 include_once "functions.php";
 
-
 // Verifica si el usuario ha iniciado sesión; si no, redirige a login.php.
 if ($_SESSION['role'] !== "admin" && $_SESSION['role'] !== "lector") {
     header("Location: login.php");
@@ -73,30 +72,40 @@ if ($_SESSION['role'] !== "admin" && $_SESSION['role'] !== "lector") {
 
         <!-- Mostrar lista de libros en un grid de tarjetas con tamaño uniforme -->
 
-        <?php
-        foreach ($_SESSION['libros'] as $libro){
-            echo '<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">';
-            echo '<div class="col">';
-            echo '<div class="card h-100 shadow-sm">';
+<?php
+    echo '<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">';
+    $i = 0;
+    //la i indica el id de cada libro el primero es 0 el segundo 1 etc
+    foreach ($_SESSION['libros'] as $libro){
+    
+    echo '<div class="col">';
+        echo '<div class="card h-100 shadow-sm">';
             echo '<img src="' . $libro['imagen'] . '" class="card-img-top" alt="' . $libro['titulo'] . '" style="height: 400px; object-fit: cover;">';
             echo '<div class="card-body">';
-            echo '<h5 class="card-title">' . $libro['titulo'] . '</h5>';
-            echo '<p class="card-text"><strong>Autor:</strong> ' . $libro['autor'] . '</p>';
-            echo '<p class="card-text">' . $libro['descripcion'] . '</p>';
+                echo '<h5 class="card-title">' . $libro['titulo'] . '</h5>';
+                echo '<p class="card-text"><strong>Autor:</strong> ' . $libro['autor'] . '</p>';
+                echo '<p class="card-text">' . $libro['descripcion'] . '</p>';
             echo '</div>';
-            echo '</div>';
-            echo '</div>';
-            echo '</div>';
+            // footer dentro de la card: botones solo para admin
             echo '<div class="card-footer d-flex justify-content-between">';
-            echo '<a href="add_edit_book.php" class="btn btn-outline-primary btn-sm">
-            <i class="fas fa-edit"></i> Editar
-            </a>';
-            echo '<a href="delete_book.php" class="btn btn-outline-danger btn-sm">
-            <i class="fas fa-trash-alt"></i> Eliminar
-            </a>';
-            echo '</div>';
-        }
-         ?>
+                if (isset($_SESSION['role']) && $_SESSION['role'] === "admin") {
+                    echo '<a href="add_edit_book.php?id=' . $i . '" class="btn btn-outline-primary btn-sm">';
+                        echo '<i class="fas fa-edit"></i> Editar';
+                    echo '</a>';
+                    echo '<a href="delete_book.php?id=' . $i . '" class="btn btn-outline-danger btn-sm">';
+                        echo '<i class="fas fa-trash-alt"></i> Eliminar';
+                    echo '</a>';
+                } else {
+                    echo '<span class="text-muted small">Solo administradores pueden editar</span>';
+                }
+                echo '</div>'; // card-footer
+            echo '</div>'; // card
+        echo '</div>'; // col
+
+        $i++;
+}
+    echo '</div>'; // row
+?>
         <!-- Botones de editar y eliminar (solo visible para el admin) -->
     
        

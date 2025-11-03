@@ -30,7 +30,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     $img = $_POST['imagen'];
     $desc = $_POST['descripcion'];
 
-    if ($editMode) {
+}
+
+ if ($editMode) {
         //EDITANDO
         editarLibro($titulo, $autor, $img, $desc, $id);
         
@@ -42,7 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     //redireccionamos al index.php
     header("Location: index.php");
     exit();
-}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -75,15 +76,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
         <!-- Formulario para agregar o editar libro. DEPENDIENDO DE SI SE AÑADE O SE EDITA CAMBIARÁN COSA DEL FORMULARIO, USA TERNARIOS SON MUY ÚTILES-->
         <form action="home.php" method="POST" class="mx-auto" style="max-width: 600px;">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="titulo" name="titulo" value="" placeholder="Título" required>
+                <input type="text" class="form-control" id="titulo" name="titulo" value="<?= $titulo?>" placeholder="Título" required>
                 <label for="titulo">Título</label>
             </div>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="autor" name="autor" value="" placeholder="Autor" required>
+                <input type="text" class="form-control" id="autor" name="autor" value="<?= $autor?>" placeholder="Autor" required>
                 <label for="autor">Autor</label>
             </div>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="imagen" name="imagen" value="" placeholder="URL de la Imagen">
+                <input type="text" class="form-control" id="imagen" name="imagen" value="<?= $imagen?>" placeholder="URL de la Imagen">
                 <label for="imagen">URL de la Imagen</label>
             </div>
             <div class="form-floating mb-4">
@@ -99,3 +100,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
+
+<?php
+
+editMode ? 'Editar Libro' : 'Añadir Nuevo Libro'; 
+
+?>

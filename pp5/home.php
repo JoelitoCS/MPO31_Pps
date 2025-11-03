@@ -11,9 +11,8 @@ if ($_SESSION['role'] !== "admin" && $_SESSION['role'] !== "lector") {
 
 // Verifica el rol del usuario
 
-
 // Obtener la lista de libros desde la sesión
-
+$_SESSION['libros'] = $_SESSION['libros'] ?? [] ;
 ?>
 
 <!DOCTYPE html>

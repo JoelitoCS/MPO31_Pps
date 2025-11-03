@@ -30,9 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     $img = $_POST['imagen'];
     $desc = $_POST['descripcion'];
 
-}
-
- if ($editMode) {
+    if ($editMode) {
         //EDITANDO
         editarLibro($titulo, $autor, $img, $desc, $id);
         
@@ -44,6 +42,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     //redireccionamos al index.php
     header("Location: index.php");
     exit();
+}
+
+ 
 ?>
 <!DOCTYPE html>
 <html lang="es">

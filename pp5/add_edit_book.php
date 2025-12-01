@@ -1,51 +1,3 @@
-<?php
-
-session_start();
-include_once "functions.php";
-
-//primer paso: comprobar si venimos para editar o para añadir
-$editMode = false; //nos dice si estamos editando o añadiendo
-$id = null;
-$titulo = $autor = $img = $desc = "";
-
-//SI HAY UN ID EN LA URL, ESTAMOS EDITANDO
-if (isset($_GET['id'])){
-    $id = $_GET['id'];
-
-    if (isset($_SESSION['libros'][$id])){
-        $editMode = true;
-        $libro = $_SESSION['libros'][$id];
-        $titulo = $libro['titulo'];
-        $autor = $libro['autor'];
-        $img = $libro['imagen'];
-        $desc = $libro['descripcion'];
-    }
-}
-
-//segundo paso: PROCESAR EL FORM(POST)
-if ($_SERVER['REQUEST_METHOD'] === 'POST'){
-    //recogemos los datos del formulario
-    $titulo = $_POST['titulo'];
-    $autor = $_POST['autor'];
-    $img = $_POST['imagen'];
-    $desc = $_POST['descripcion'];
-
-    if ($editMode) {
-        //EDITANDO
-        editarLibro($titulo, $autor, $img, $desc, $id);
-        
-    } else {
-        //AÑADIENDO
-        agregarLibro($titulo, $autor, $img, $desc, $id);
-    }
-
-    //redireccionamos al index.php
-    header("Location: index.php");
-    exit();
-}
-
- 
-?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -104,6 +56,49 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
 
 <?php
 
-editMode ? 'Editar Libro' : 'Añadir Nuevo Libro'; 
+session_start();
+include_once "functions.php";
 
+//primer paso: comprobar si venimos para editar o para añadir
+$editMode = false; //nos dice si estamos editando o añadiendo
+$id = null;
+$titulo = $autor = $img = $desc = "";
+
+//SI HAY UN ID EN LA URL, ESTAMOS EDITANDO
+if (isset($_GET['id'])){
+    $id = $_GET['id'];
+
+    if (isset($_SESSION['libros'][$id])){
+        $editMode = true;
+        $libro = $_SESSION['libros'][$id];
+        $titulo = $libro['titulo'];
+        $autor = $libro['autor'];
+        $img = $libro['imagen'];
+        $desc = $libro['descripcion'];
+    }
+}
+
+//segundo paso: PROCESAR EL FORM(POST)
+if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+    //recogemos los datos del formulario
+    $titulo = $_POST['titulo'];
+    $autor = $_POST['autor'];
+    $img = $_POST['imagen'];
+    $desc = $_POST['descripcion'];
+
+    if ($editMode) {
+        //EDITANDO
+        editarLibro($titulo, $autor, $img, $desc, $id);
+        
+    } else {
+        //AÑADIENDO
+        agregarLibro($titulo, $autor, $img, $desc, $id);
+    }
+
+    //redireccionamos al index.php
+    header("Location: index.php");
+    exit();
+}
+
+ 
 ?>

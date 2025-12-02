@@ -1,12 +1,12 @@
 <?php
 $host = 'mysql-adaw.alwaysdata.net';
-$dbname = 'adaw_gestor_notas_uab';
+$dbname = 'adaw_pp6_canojoel';
 $username = 'adaw';
 $password = '16082006jcs';
 
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
-echo "Probando conexion a la base de datos...<br>";
+
 
 $mysqli = new mysqli($host, $username, $password, $dbname);
 

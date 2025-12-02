@@ -2,7 +2,7 @@
 
 require 'config.php';
 
-$users = $mysqli->query("SELECT * FROM users");
+$users = $mysqli->query("SELECT * FROM usuaris");
 echo "<br>";
 var_dump($users);
 
@@ -15,7 +15,7 @@ echo "<br>";
 
 function returnUserData(){
     global $mysqli;
-    $users = $mysqli->query("SELECT * FROM users");
+    $users = $mysqli->query("SELECT * FROM usuaris");
     $resultUsers = $users->fetch_all(MYSQLI_ASSOC);
     return $resultUsers;
 }

@@ -5,7 +5,8 @@
     "context": "."
   },
   "forwardPorts": [80],
-  "postCreateCommand": "php -m", 
+  "remoteUser": "codespace",
+  "postCreateCommand": "php -m",
   "customizations": {
     "vscode": {
       "extensions": [

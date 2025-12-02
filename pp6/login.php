@@ -1,72 +1,165 @@
 <?php
 session_start();
 require_once 'config.php';
+$error = ""; // inicializamos
 
-//1. Verificar si el formlario ha sido enviado
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    //2. Recoger los datos del formulario
-    $email = $_POST['email'];
+    $email = trim($_POST['email']);
     $password = $_POST['password'];
 
-    //3. Preparar la consulta para buscar el usuario por email
     $stmt = $mysqli->prepare("SELECT id, nom, email, password, rol FROM usuaris WHERE email = ?");
-    
-    //4. Comprobar si la preparación fue exitosa
-    if (!$stmt){
-        die("Error en la preparación de la consulta: " . $mysqli->error);
-    }
-
-    //5. Vincular los parámetros
     $stmt->bind_param("s", $email);
-    //6. Ejecutar la consulta
     $stmt->execute();
-    //7. Obtener el resultado
     $result = $stmt->get_result();
-    //8. Verificar si se encontró un usuario
+
     if ($result->num_rows === 1){
         $user = $result->fetch_assoc();
-        //9. Verificar la contraseña
-        if (password_verify($password, $user['password'])){
-            //10. Iniciar sesión y almacenar datos del usuario en la sesión
+        if (password_verify($password, $user['password']) || $password === $user['password']){
+            // Login correcto
+            if (!password_get_info($user['password'])['algo']) {
+                $hashed = password_hash($password, PASSWORD_DEFAULT);
+                $stmt_update = $mysqli->prepare("UPDATE usuaris SET password = ? WHERE id = ?");
+                $stmt_update->bind_param("si", $hashed, $user['id']);
+                $stmt_update->execute();
+                $stmt_update->close();
+            }
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_name'] = $user['nom'];
             $_SESSION['user_email'] = $user['email'];
             $_SESSION['user_rol'] = $user['rol'];
-            
-            echo "Inicio de sesión exitoso. Bienvenido, " . htmlspecialchars($user['nom']) . "!";
             header("Location: index.php");
             exit();
         } else {
-            echo "Contraseña incorrecta.";
+            $error = "Contraseña incorrecta, inténtalo de nuevo.";
         }
     } else {
-        echo "No se encontró ningún usuario con ese email.";
+        $error = "No se encontró ningún usuario con ese email.";
     }
-
     $stmt->close();
     $mysqli->close();
-
 }
-
 ?>
 
-<!-- formulario para comprobar login con username y password -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0
-">
-    <title>Login de Usuario</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login de Usuario</title>
+<style>
+/* RESET */
+* { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #4e54c8, #8f94fb);
+    background-size: 400% 400%;
+    animation: gradientBG 10s ease infinite;
+}
+
+@keyframes gradientBG {
+    0% {background-position:0% 50%;}
+    50% {background-position:100% 50%;}
+    100% {background-position:0% 50%;}
+}
+
+/* CARD CENTRAL */
+.login-container {
+    width: 350px;
+    max-width: 90%;
+    padding: 40px 30px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* hijos centrados */
+}
+
+/* TITULO */
+h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+}
+
+/* ERROR DENTRO DEL CARD */
+.error-message {
+    width: 100%;
+    text-align: center;
+    background: rgba(255,0,0,0.3);
+    color: #fff;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    animation: fadeIn 0.5s ease;
+}
+
+/* FORMULARIO */
+form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form input {
+    width: 100%;
+    padding: 15px 20px;
+    margin: 10px 0;
+    border-radius: 50px;
+    border: none;
+    outline: none;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+form input::placeholder { color: rgba(255,255,255,0.7); }
+
+form input:focus {
+    background: rgba(255,255,255,0.3);
+    box-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+
+form input[type="submit"] {
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+form input[type="submit"]:hover {
+    transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(255,75,43,0.5);
+}
+
+@keyframes fadeIn {
+    from {opacity:0; transform: translateY(-10px);}
+    to {opacity:1; transform: translateY(0);}
+}
+</style>
 </head>
 <body>
+<div class="login-container">
     <h2>Login de Usuario</h2>
+
+    <!-- ERROR DENTRO DEL CARD -->
+    <?php if(!empty($error)) { echo '<div class="error-message">'.$error.'</div>'; } ?>
+
     <form method="POST" action="login.php">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br><br>
-        <label for="password">Contraseña:</label>
-        <input type="password" id="password" name="password" required><br><br>
+        <input type="email" id="email" name="email" placeholder="Email" required>
+        <input type="password" id="password" name="password" placeholder="Contraseña" required>
         <input type="submit" value="Iniciar Sesión">
     </form>
+</div>
 </body>
 </html>

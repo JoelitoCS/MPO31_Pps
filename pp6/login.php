@@ -1,51 +1,100 @@
 <?php
-session_start();
+session_start(); 
+// Inicia la sesión de PHP para poder usar $_SESSION y mantener al usuario logueado
+
 require_once 'config.php';
-$error = ""; // inicializamos
+// Incluye la configuración de la base de datos y otros parámetros necesarios ($mysqli)
 
+$error = ""; 
+// Inicializa la variable que almacenará los mensajes de error del login
 
-//carlos contraseña = 1234
-//laura contraseña = abcd
-//miguel contraseña = pass
+// Usuarios de ejemplo para pruebas
+// carlos: mail = carlos@pcshop.com // contraseña = 1234
+// laura contraseña = abcd
+// miguel contraseña = pass
 // ana contraseña = qwerty
 
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    // Comprueba si el formulario se ha enviado usando el método POST
+
     $email = trim($_POST['email']);
+    // Obtiene el email ingresado y elimina espacios en blanco al inicio y final
+
     $password = $_POST['password'];
+    // Obtiene la contraseña ingresada
 
     $stmt = $mysqli->prepare("SELECT id, nom, email, password, rol FROM usuaris WHERE email = ?");
+    // Prepara una consulta segura para buscar un usuario por email
 
     $stmt->bind_param("s", $email);
+    // Asigna el email como parámetro a la consulta preparada (tipo string "s")
+
     $stmt->execute();
+    // Ejecuta la consulta
+
     $result = $stmt->get_result();
+    // Obtiene el resultado de la consulta como un objeto de resultado
 
     if ($result->num_rows === 1){
-        
+        // Si se encontró exactamente un usuario con ese email
+
         $user = $result->fetch_assoc();
+        // Extrae los datos del usuario como un array asociativo
 
         if (password_verify($password, $user['password']) || $password === $user['password']){
-            // Login correcto
+            // Verifica si la contraseña ingresada coincide con la almacenada
+            // password_verify() para contraseñas hash; || permite compatibilidad con contraseñas sin hash
+
             if (!password_get_info($user['password'])['algo']) {
+                // Si la contraseña almacenada no está hasheada
+
                 $hashed = password_hash($password, PASSWORD_DEFAULT);
+                // Hashea la contraseña usando el algoritmo por defecto
+
                 $stmt_update = $mysqli->prepare("UPDATE usuaris SET password = ? WHERE id = ?");
+                // Prepara la consulta para actualizar la contraseña en la base de datos
+
                 $stmt_update->bind_param("si", $hashed, $user['id']);
+                // Asigna los parámetros: la contraseña hasheada (string) y el id del usuario (integer)
+
                 $stmt_update->execute();
+                // Ejecuta la actualización de la contraseña
+
                 $stmt_update->close();
+                // Cierra la consulta de actualización
             }
+
             $_SESSION['user_id'] = $user['id'];
+            // Guarda el id del usuario en la sesión
+
             $_SESSION['user_name'] = $user['nom'];
+            // Guarda el nombre del usuario en la sesión
+
             $_SESSION['user_email'] = $user['email'];
+            // Guarda el email del usuario en la sesión
+
             $_SESSION['user_rol'] = $user['rol'];
+            // Guarda el rol del usuario en la sesión (user/admin)
+
             header("Location: index.php");
+            // Redirige al usuario a index.php después de iniciar sesión
+
             exit();
+            // Finaliza la ejecución del script para evitar que se ejecute código adicional
         } else {
             $error = "Contraseña incorrecta, inténtalo de nuevo.";
+            // Mensaje de error si la contraseña no coincide
         }
     } else {
         $error = "No se encontró ningún usuario con ese email.";
+        // Mensaje de error si el email no está registrado
     }
+
     $stmt->close();
+    // Cierra la consulta de selección
+
     $mysqli->close();
+    // Cierra la conexión a la base de datos
 }
 ?>
 
@@ -56,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Login de Usuario</title>
 <style>
-/* RESET */
+/* RESET de estilos */
 * { margin:0; padding:0; box-sizing:border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
 
 body {
@@ -68,14 +117,15 @@ body {
     background-size: 400% 400%;
     animation: gradientBG 10s ease infinite;
 }
+/* Crea un fondo animado de gradiente que cambia de posición continuamente */
 
 @keyframes gradientBG {
     0% {background-position:0% 50%;}
     50% {background-position:100% 50%;}
     100% {background-position:0% 50%;}
 }
+/* Animación que mueve el gradiente de fondo de izquierda a derecha */
 
-/* CARD CENTRAL */
 .login-container {
     width: 350px;
     max-width: 90%;
@@ -87,17 +137,17 @@ body {
     color: #fff;
     display: flex;
     flex-direction: column;
-    align-items: center; /* hijos centrados */
+    align-items: center;
 }
+/* Card central del login con fondo semi-transparente, blur y sombra */
 
-/* TITULO */
 h2 {
     margin-bottom: 20px;
     font-size: 2rem;
     text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
 }
+/* Título del login con sombra para destacar */
 
-/* ERROR DENTRO DEL CARD */
 .error-message {
     width: 100%;
     text-align: center;
@@ -109,14 +159,15 @@ h2 {
     box-shadow: 0 5px 15px rgba(0,0,0,0.2);
     animation: fadeIn 0.5s ease;
 }
+/* Mensaje de error dentro del card con animación fadeIn */
 
-/* FORMULARIO */
 form {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+/* Estilo del formulario: columnas centradas */
 
 form input {
     width: 100%;
@@ -130,13 +181,16 @@ form input {
     font-size: 1rem;
     transition: all 0.3s ease;
 }
+/* Inputs del formulario con fondo semitransparente y bordes redondeados */
 
 form input::placeholder { color: rgba(255,255,255,0.7); }
+/* Color del placeholder */
 
 form input:focus {
     background: rgba(255,255,255,0.3);
     box-shadow: 0 0 10px rgba(255,255,255,0.5);
 }
+/* Estilo al enfocar el input */
 
 form input[type="submit"] {
     background: linear-gradient(135deg, #ff416c, #ff4b2b);
@@ -145,6 +199,7 @@ form input[type="submit"] {
     cursor: pointer;
     transition: all 0.4s ease;
 }
+/* Botón de submit con gradiente y efecto hover */
 
 form input[type="submit"]:hover {
     transform: scale(1.05);
@@ -155,13 +210,14 @@ form input[type="submit"]:hover {
     from {opacity:0; transform: translateY(-10px);}
     to {opacity:1; transform: translateY(0);}
 }
+/* Animación para que los elementos de error aparezcan suavemente */
 </style>
 </head>
 <body>
 <div class="login-container">
     <h2>Login de Usuario</h2>
 
-    <!-- ERROR DENTRO DEL CARD -->
+    <!-- Muestra el mensaje de error si $error no está vacío -->
     <?php if(!empty($error)) { echo '<div class="error-message">'.$error.'</div>'; } ?>
 
     <form method="POST" action="login.php">

@@ -69,10 +69,10 @@
         <h1>Panel de Administración</h1>
         <p>Bienvenido al panel de administración. Aquí puedes gestionar el sitio web.</p>
         <div class="admin-links">
-            <a class="admin-link" href="usuariosAdmin.php">Gestión de Usuarios</a>
+            <a class="admin-link" href="adminUsers.php">Gestión de Usuarios</a>
             <a class="admin-link" href="adminTestimonios.php">Gestión de Testimonios</a>
             <a class="admin-link" href="adminNews.php">Gestión de Noticias</a>
-            <a class="admin-link" href="portfolioAdmin.php">Gestión de Portfolio</a>
+            <a class="admin-link" href="adminPortfolio.php">Gestión de Portfolio</a>
         </div>
     </div>
 </body>

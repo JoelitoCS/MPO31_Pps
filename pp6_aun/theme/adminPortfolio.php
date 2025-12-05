@@ -3,10 +3,9 @@
 session_start();
 require 'config.php';
 if ($_SESSION['user_rol'] !== 'admin') exit("Sense permisos");
-$result = $mysqli->query("SELECT * FROM usuaris");
-$user = $result->fetch_all(MYSQLI_ASSOC);
+$result = $mysqli->query("SELECT * FROM portfolio");
+$port = $result->fetch_all(MYSQLI_ASSOC);
 ?>
-
 <style>
     body {
         background: linear-gradient(135deg, #232526 0%, #414345 100%);
@@ -110,31 +109,30 @@ $user = $result->fetch_all(MYSQLI_ASSOC);
         text-decoration: underline;
     }
 </style>
-
-<h1>Usuarios</h1>
-<a class="add-btn" href="addUsuario.php">+ Añadir Usuario</a>
+<h1>Portfolio</h1>
+<a class="add-btn" href="addPortfolio.php">+ Añadir Portfolio</a>
 <div class="table-container">
     <table>
         <tr>
             <th>ID</th>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Password</th>
-            <th>Rol</th>
-            <th>Fecha de publicación</th>
+            <th>Título</th>
+            <th>Descripción</th>
+            <th>Imagen</th>
+            <th>Categoria</th>
             <th>Acciones</th>
         </tr>
-        <?php foreach ($user as $u): ?>
+        <?php foreach ($port as $p): ?>
             <tr>
-                <td><?= $u['id'] ?></td>
-                <td><?= $u['nom'] ?></td>
-                <td><?= $u['email'] ?></td>
-                <td><?= $u['password'] ?></td>
-                <td><?= $u['rol'] ?></td>
-                <td><?= $u['data_registre'] ?></td>
+                <td><?= $p['id'] ?></td>
+                <td><?= $p['titol'] ?></td>
+                <td class="subtitulo"><?= $p['subtitol'] ?></td>
+                <td class="cuerpo"><?= $p['cos'] ?></td>
+                <td><?= $p['data_publicacio'] ?></td>
+                <td class="imagen"><?= $p['imatge'] ?></td>
+                <td><?= $p['autor'] ?></td>
                 <td>
-                    <a href="editUsuario.php?id=<?= $u['id'] ?>">Editar</a> |
-                    <a onclick="return confirm('¿Seguro?')" href="deleteUsuario.php?id=<?= $u['id'] ?>">Eliminar</a>
+                    <a href="editPortfolio.php?id=<?= $p['id'] ?>">Editar</a> |
+                    <a onclick="return confirm('¿Seguro?')" href="deletePortfolio.php?id=<?= $p['id'] ?>">Eliminar</a>
                 </td>
             </tr>
         <?php endforeach; ?>

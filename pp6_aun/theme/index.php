@@ -19,6 +19,16 @@ if (!$stmt) {
 
 $noticies = $stmt->fetch_all(MYSQLI_ASSOC); // obtenemos todos los resultados
 
+$result = $mysqli->query("SELECT * FROM testimonis");
+$testimonis = $result->fetch_all(MYSQLI_ASSOC);
+
+$resultPortfolio = $mysqli->query("SELECT * FROM portfolio");
+
+if (!$resultPortfolio) {
+  die("Error en la consulta: " . $mysqli->error);
+}
+$portfolio = $resultPortfolio->fetch_all(MYSQLI_ASSOC);
+
 ?>
 
 <!DOCTYPE html>
@@ -83,186 +93,33 @@ $noticies = $stmt->fetch_all(MYSQLI_ASSOC); // obtenemos todos los resultados
   </section>
   <!-- /banner -->
 
-  <!-- service -->
-  <section class="section">
+  <section style="padding: 280px 0;">
     <div class="container">
       <div class="row">
         <div class="col-lg-10 mx-auto text-center">
-          <h2 class="section-title">Our Services</h2>
-          <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.</p>
+          <h2>Portfolio</h2>
           <div class="section-border"></div>
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-4 mb-4 mb-lg-0">
-          <div class="card hover-bg-secondary shadow py-4 active">
-            <div class="card-body text-center">
-              <div class="position-relative">
-                <i
-                  class="icon-lg icon-box bg-gradient-primary rounded-circle ti-palette mb-5 d-inline-block text-white"></i>
-                <i class="icon-lg icon-watermark text-white ti-palette"></i>
+        <?php foreach ($portfolio as $pf): ?>
+          <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
+            <article class="card">
+              <img src="<?= htmlspecialchars($pf['imatge']) ?>" alt="<?= htmlspecialchars($pf['titol']) ?>" class="card-img-top mb-2">
+              <div class="card-body p-0">
+                <p><?= htmlspecialchars($pf['categoria']) ?></p>
+                <p class="h4 card-title d-block my-3 text-dark"><?= htmlspecialchars($pf['titol']) ?></p>
+                <p><?= htmlspecialchars($pf['descripcio']) ?></p>
               </div>
-              <h4 class="mb-4">Design</h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmo</p>
-            </div>
+            </article>
           </div>
-        </div>
-        <div class="col-lg-4 mb-4 mb-lg-0">
-          <div class="card hover-bg-secondary shadow py-4">
-            <div class="card-body text-center">
-              <div class="position-relative">
-                <i
-                  class="icon-lg icon-box bg-gradient-primary rounded-circle ti-dashboard mb-5 d-inline-block text-white"></i>
-                <i class="icon-lg icon-watermark text-white ti-dashboard"></i>
-              </div>
-              <h4 class="mb-4">Development</h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmo</p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 mb-4 mb-lg-0">
-          <div class="card hover-bg-secondary shadow py-4">
-            <div class="card-body text-center">
-              <div class="position-relative">
-                <i
-                  class="icon-lg icon-box bg-gradient-primary rounded-circle ti-announcement mb-5 d-inline-block text-white"></i>
-                <i class="icon-lg icon-watermark text-white ti-announcement"></i>
-              </div>
-              <h4 class="mb-4">Marketing</h4>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmo</p>
-            </div>
-          </div>
-        </div>
+        <?php endforeach; ?>
       </div>
     </div>
   </section>
-  <!-- /service -->
 
-  <!-- feature -->
-  <section class="section bg-secondary position-relative">
-    <div class="bg-image overlay-secondary">
-      <img src="images/feature.jpg" alt="bg-image">
-    </div>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-xl-9 mx-auto">
-          <div class="row align-items-center">
-            <div class="col-lg-4 mb-4 mb-lg-0">
-              <img src="images/feature.jpg" alt="feature-image" class="img-fluid">
-            </div>
-            <div class="col-lg-7 offset-lg-1">
-              <div class="row">
-                <div class="col-12">
-                  <h2 class="text-white">We know What Bait to Use</h2>
-                  <div class="section-border ml-0"></div>
-                </div>
-                <div class="col-md-6 mb-4">
-                  <div class="media">
-                    <i class="icon text-gradient-primary ti-vector mr-3"></i>
-                    <div class="media-body">
-                      <h4 class="text-white">User Experience</h4>
-                      <p class="text-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmo</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 mb-4">
-                  <div class="media">
-                    <i class="icon text-gradient-primary ti-layout mr-3"></i>
-                    <div class="media-body">
-                      <h4 class="text-white">Responsive Layout</h4>
-                      <p class="text-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmo</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 mb-4">
-                  <div class="media">
-                    <i class="icon text-gradient-primary ti-headphone-alt mr-3"></i>
-                    <div class="media-body">
-                      <h4 class="text-white">Digital Solutions</h4>
-                      <p class="text-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmo</p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-6 mb-4">
-                  <div class="media">
-                    <i class="icon text-gradient-primary ti-ruler-pencil mr-3"></i>
-                    <div class="media-body">
-                      <h4 class="text-white">Bootstrap 4x</h4>
-                      <p class="text-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmo</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- /feature -->
 
-  <!-- project -->
-  <section class="section">
-    <div class="container-fluid px-0">
-      <div class="row">
-        <div class="col-lg-10 mx-auto text-center">
-          <h2>Our Feature Works</h2>
-          <div class="section-border"></div>
-        </div>
-      </div>
 
-      <div class="row no-gutters shuffle-wrapper">
-        <div class="col-lg-4 col-md-6 shuffle-item">
-          <div class="project-item">
-            <img src="images/project/project-1.jpg" alt="project-image" class="img-fluid w-100">
-            <div class="project-hover bg-secondary px-4 py-3">
-              <a href="#" class="text-white h4">Project title</a>
-              <a href="#"><i class="ti-link icon-xs text-white"></i></a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6 shuffle-item">
-          <div class="project-item">
-            <img src="images/project/project-2.jpg" alt="project-image" class="img-fluid w-100">
-            <div class="project-hover bg-secondary px-4 py-3">
-              <a href="#" class="text-white h4">Project title</a>
-              <a href="#"><i class="ti-link icon-xs text-white"></i></a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6 shuffle-item">
-          <div class="project-item">
-            <img src="images/project/project-3.jpg" alt="project-image" class="img-fluid w-100">
-            <div class="project-hover bg-secondary px-4 py-3">
-              <a href="#" class="text-white h4">Project title</a>
-              <a href="#"><i class="ti-link icon-xs text-white"></i></a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6 shuffle-item">
-          <div class="project-item">
-            <img src="images/project/project-4.jpg" alt="project-image" class="img-fluid w-100">
-            <div class="project-hover bg-secondary px-4 py-3">
-              <a href="#" class="text-white h4">Project title</a>
-              <a href="#"><i class="ti-link icon-xs text-white"></i></a>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-4 col-md-6 shuffle-item">
-          <div class="project-item">
-            <img src="images/project/project-5.jpg" alt="project-image" class="img-fluid w-100">
-            <div class="project-hover bg-secondary px-4 py-3">
-              <a href="#" class="text-white h4">Project title</a>
-              <a href="#"><i class="ti-link icon-xs text-white"></i></a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- /project -->
 
   <!-- call to action 
 <section>
@@ -278,16 +135,35 @@ $noticies = $stmt->fetch_all(MYSQLI_ASSOC); // obtenemos todos los resultados
 </section>
 <!-- /call to action -->
 
-  <!-- pricing -->
-  <section class="section pb-0">
+  <!-- testimonial-slider -->
+  <section class="section bg-secondary">
     <div class="container">
       <div class="row">
-        <div class="col-lg-10 mx-auto text-center">
-          <h2>Testimonios</h2>
-          <div class="section-border"></div>
+        <div class="col-12 text-center">
+          <h2 class="text-white mb-5">Testimonios</h2>
         </div>
       </div>
-      <!-- 
+      <div class="row bg-contain" data-background="images/banner/brush.png">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div id="slider" class="ui-card-slider bg-contain">
+            <?php foreach ($testimonis as $testimoni): ?>
+              <div class="slide">
+                <div class="card text-center">
+                  <div class="card-body px-5 py-4">
+                    <img src="images/testimonial/user-1.jpg" alt="user-1" class="img-fluid rounded-circle mb-4">
+                    <h4 class="text-secondary"><?= htmlspecialchars($testimoni['nom']) ?><br><?= htmlspecialchars($testimoni['cognom']) ?></h4>
+                    <p><?= htmlspecialchars($testimoni['testimoni']) ?></p>
+                  </div>
+                </div>
+              </div>
+            <?php endforeach; ?>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- /testimonial-slider -->
+  <!-- 
      
     <div class="row">
       <div class="col-lg-4 col-sm-6 mb-4 mb-lg-0">
@@ -346,7 +222,7 @@ $noticies = $stmt->fetch_all(MYSQLI_ASSOC); // obtenemos todos los resultados
       </div>
     </div>
     -->
-    </div>
+  </div>
   </section>
   <!-- /pricing -->
 
@@ -367,12 +243,12 @@ $noticies = $stmt->fetch_all(MYSQLI_ASSOC); // obtenemos todos los resultados
               <div class="card-body p-0">
                 <time><?= $noticia['data_publicacio'] ?></time>
                 <a href="blog-single" class="h4 card-title d-block my-3 text-dark hover-text-underline"><?= htmlspecialchars($noticia['titol']) ?></a>
-                <a href="blog-single.php?id=<?= $noticia['id'] ?>" class="btn btn-transparent">Leer más</a>
+                <a href="detalle.php?id=<?= $noticia['id'] ?>" class="btn btn-transparent">Leer más</a>
               </div>
             </article>
           </div>
         <?php endforeach; ?>
-      </div>  
+      </div>
     </div>
   </section>
   <!-- /blog -->

@@ -1,5 +1,8 @@
 <?php
-
+//validacion del estado de la sesion, lo busque porque no sabia que error era
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 require 'config.php'; // incluimos la conexión
 
 ?>
@@ -18,12 +21,11 @@ require 'config.php'; // incluimos la conexión
           <a class="nav-link" href="index.php">Inicio</a>
         </li>
 
-        <?php
-        if (isset($_SESSION['role'])): ?>
+        <?php if (isset($_SESSION['user_rol']) && $_SESSION['user_rol'] === 'admin'): ?>
         <li class="nav-item active">
-          <a class="nav-link" href="index.php">Inicio</a>
+          <a class="nav-link" href="adminPanel.php">Panel Admin</a>
         </li>
-        ?>
+        <?php endif; ?>
         
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Páginas</a>

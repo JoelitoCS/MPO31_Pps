@@ -73,6 +73,7 @@
             <a class="admin-link" href="adminTestimonios.php">Gestión de Testimonios</a>
             <a class="admin-link" href="adminNews.php">Gestión de Noticias</a>
             <a class="admin-link" href="adminPortfolio.php">Gestión de Portfolio</a>
+            <a class="admin-link" href="index.php">Vuelve a la Web</a>
         </div>
     </div>
 </body>

@@ -22,7 +22,7 @@ require 'config.php'; // incluimos la conexión
         </li>
 
         <?php if (isset($_SESSION['user_rol']) && $_SESSION['user_rol'] === 'admin'): ?>
-        <li class="nav-item active">
+        <li class="nav-item">
           <a class="nav-link" href="adminPanel.php">Panel Admin</a>
         </li>
         <?php endif; ?>
@@ -41,6 +41,12 @@ require 'config.php'; // incluimos la conexión
         <li class="nav-item">
           <a class="nav-link" href="register.php">Regístrate</a>
         </li>
+        <?php if (isset($_SESSION['user_rol']) && ($_SESSION['user_rol'] === 'user' || $_SESSION['user_rol'] === 'admin')): ?>
+        <li class="nav-item">
+          <a class="nav-link" href="logout.php">Cerrar Sesión</a>
+        </li>
+        <?php endif; ?>
+        
       </ul>
     </div>
   </nav>

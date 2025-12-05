@@ -125,11 +125,9 @@ $port = $result->fetch_all(MYSQLI_ASSOC);
             <tr>
                 <td><?= $p['id'] ?></td>
                 <td><?= $p['titol'] ?></td>
-                <td class="subtitulo"><?= $p['subtitol'] ?></td>
-                <td class="cuerpo"><?= $p['cos'] ?></td>
-                <td><?= $p['data_publicacio'] ?></td>
-                <td class="imagen"><?= $p['imatge'] ?></td>
-                <td><?= $p['autor'] ?></td>
+                <td class="subtitulo"><?= $p['descripcio'] ?></td>
+                <td class="cuerpo"><?= $p['imatge'] ?></td>
+                <td><?= $p['categoria'] ?></td>
                 <td>
                     <a href="editPortfolio.php?id=<?= $p['id'] ?>">Editar</a> |
                     <a onclick="return confirm('¿Seguro?')" href="deletePortfolio.php?id=<?= $p['id'] ?>">Eliminar</a>

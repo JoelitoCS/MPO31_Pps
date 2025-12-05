@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $imatge = $_POST['imatge'];
     $categoria = $_POST['categoria'];
 
-    $stmt = $mysqli->prepare("INSERT INTO portfolio (titol, descripcio, imatge, data, categoria) VALUES (?, ?, ?, NOW(), ?)");
+    $stmt = $mysqli->prepare("INSERT INTO portfolio (titol, descripcio, imatge, categoria) VALUES (?, ?, ?, ?)");
     $stmt->bind_param("ssss", $titol, $descripcio, $imatge, $categoria);
     $stmt->execute();
     header("Location: adminPortfolio.php");

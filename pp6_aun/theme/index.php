@@ -360,7 +360,6 @@ $noticies = $stmt->fetch_all(MYSQLI_ASSOC); // obtenemos todos los resultados
         </div>
       </div>
       <div class="row">
-        
         <?php foreach ($noticies as $noticia): ?>
           <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
             <article class="card">
@@ -368,13 +367,12 @@ $noticies = $stmt->fetch_all(MYSQLI_ASSOC); // obtenemos todos los resultados
               <div class="card-body p-0">
                 <time><?= $noticia['data_publicacio'] ?></time>
                 <a href="blog-single" class="h4 card-title d-block my-3 text-dark hover-text-underline"><?= htmlspecialchars($noticia['titol']) ?></a>
-                <a href="noticias.php" class="btn btn-transparent">Leer más</a>
+                <a href="blog-single.php?id=<?= $noticia['id'] ?>" class="btn btn-transparent">Leer más</a>
               </div>
             </article>
           </div>
         <?php endforeach; ?>
-        
-
+      </div>  
     </div>
   </section>
   <!-- /blog -->
